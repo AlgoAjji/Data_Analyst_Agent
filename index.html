@@ -3,40 +3,287 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TDS Data Analyst Agent</title>
+  <title>Automated Data Analyst Agent</title>
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
+    /*
+      ========================================================================================
+      AURORA BOREALIS LIVE BACKGROUND
+      This CSS creates a dynamic, animated background that simulates the Northern Lights.
+      It uses multiple layers of gradients and a keyframe animation to create a flowing effect.
+      The colors and animation have been updated for a lightning-like effect.
+      ========================================================================================
+    */
+    @keyframes aurora {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    
+    @keyframes lightning {
+      0%, 100% {
+        opacity: 0.7;
+        transform: scaleY(1);
+      }
+      20% {
+        opacity: 0.9;
+        transform: scaleY(1.2) translateY(-10%);
+        box-shadow: 0 0 50px rgba(0, 255, 255, 0.5);
+      }
+      22% {
+        opacity: 0.5;
+        transform: scaleY(1);
+        box-shadow: none;
+      }
+      24% {
+        opacity: 0.9;
+        transform: scaleY(1.1) translateY(-5%);
+        box-shadow: 0 0 40px rgba(0, 255, 255, 0.4);
+      }
+      26% {
+        opacity: 0.7;
+        transform: scaleY(1);
+      }
+    }
+
+    /*
+      ========================================================================================
+      BUTTON SHIMMER ANIMATION
+      This keyframe animation creates a subtle shimmering effect on the buttons.
+      It works by shifting the background gradient position to create a moving highlight.
+      ========================================================================================
+    */
+    @keyframes shimmer {
+      0% {
+        background-position: 0% 50%;
+      }
+      100% {
+        background-position: 100% 50%;
+      }
+    }
+
+    /*
+      ========================================================================================
+      TWINKLING STARS ANIMATION
+      This keyframe animation creates a blinking effect to simulate stars twinkling in the background.
+      ========================================================================================
+    */
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      line-height: 1.6; color:#333;
-      background: linear-gradient(135deg,#667eea 0%,#764ba2 100%);
-      min-height:100vh;
+      line-height: 1.6;
+      color: #fff;
+      min-height: 100vh;
+      background: #000428; /* Deeper, more prominent dark blue sky */
+      position: relative;
+      overflow: hidden;
     }
-    .container { max-width:1200px; margin:0 auto; padding:20px; }
+
+    /* Aurora effect layer with new, more vibrant colors */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        135deg,
+        rgba(0, 4, 40, 0.5),
+        rgba(30, 0, 100, 0.8), /* Deep blue-violet */
+        rgba(60, 20, 180, 0.8), /* Vivid violet */
+        rgba(0, 150, 255, 0.8), /* Sky blue */
+        rgba(0, 200, 200, 0.8), /* Cyan */
+        rgba(0, 255, 150, 0.8), /* Mint green */
+        rgba(0, 200, 200, 0.8),
+        rgba(0, 150, 255, 0.8),
+        rgba(60, 20, 180, 0.8)
+      );
+      background-size: 600% 600%;
+      mix-blend-mode: normal;
+      /* Combined animations for flowing and lightning effects */
+      animation:
+        aurora 35s ease infinite,
+        lightning 15s linear infinite; /* New lightning effect */
+      opacity: 0.7;
+      z-index: -1;
+    }
+
+    /* Star layers - increased density */
+    .stars, .stars::before, .stars::after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      content: '';
+      background-image:
+        radial-gradient(1.5px 1.5px at 15% 25%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1.5px 1.5px at 35% 65%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1.5px 1.5px at 55% 5%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1.5px 1.5px at 75% 85%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1.5px 1.5px at 95% 45%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1.5px 1.5px at 5% 95%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1.5px 1.5px at 45% 10%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1.5px 1.5px at 85% 75%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1.5px 1.5px at 10% 80%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1.5px 1.5px at 60% 40%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1.5px 1.5px at 25% 15%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1.5px 1.5px at 80% 30%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1.5px 1.5px at 50% 90%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1.5px 1.5px at 70% 5%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1.5px 1.5px at 5% 70%, #fff, rgba(255, 255, 255, 0));
+      background-repeat: repeat;
+      animation: twinkle 5s linear infinite;
+      z-index: -2;
+    }
+
+    .stars::before {
+      background-image:
+        radial-gradient(1px 1px at 10% 50%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1px 1px at 70% 20%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1px 1px at 50% 80%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1px 1px at 90% 40%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1px 1px at 30% 90%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1px 1px at 80% 5%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1px 1px at 20% 70%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1px 1px at 60% 30%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1px 1px at 45% 45%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1px 1px at 5% 15%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1px 1px at 85% 95%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1px 1px at 15% 5%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1px 1px at 25% 65%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1px 1px at 75% 35%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1px 1px at 95% 75%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(1px 1px at 55% 55%, #fff, rgba(255, 255, 255, 0));
+      animation-duration: 7s;
+      animation-delay: 2s;
+    }
+
+    .stars::after {
+      background-image:
+        radial-gradient(0.75px 0.75px at 30% 60%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(0.75px 0.75px at 85% 15%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(0.75px 0.75px at 5% 95%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(0.75px 0.75px at 75% 55%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(0.75px 0.75px at 40% 20%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(0.75px 0.75px at 65% 80%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(0.75px 0.75px at 15% 35%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(0.75px 0.75px at 90% 70%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(0.75px 0.75px at 25% 50%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(0.75px 0.75px at 50% 10%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(0.75px 0.75px at 80% 90%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(0.75px 0.75px at 10% 20%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(0.75px 0.75px at 60% 85%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(0.75px 0.75px at 95% 45%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(0.75px 0.75px at 70% 30%, #fff, rgba(255, 255, 255, 0)),
+        radial-gradient(0.75px 0.75px at 35% 85%, #fff, rgba(255, 255, 255, 0));
+      animation-duration: 9s;
+      animation-delay: 4s;
+    }
+
+    /*
+      ========================================================================================
+      END OF AURORA BOREALIS LIVE BACKGROUND
+      ========================================================================================
+    */
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    
+    .container { max-width:1200px; margin:0 auto; padding:20px; z-index: 1; position: relative; } /* Added z-index for content */
     .header { text-align:center; margin-bottom:30px; color:#fff; }
     .header h1 { font-size:2.5rem; margin-bottom:10px; text-shadow:2px 2px 4px rgba(0,0,0,.3); }
     .header p { font-size:1.1rem; opacity:.9; }
     .main-card {
-      background:#fff; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,.2);
-      padding:30px; margin-bottom:30px;
+      /* Made the background transparent and added a frosted glass effect */
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      border-radius:15px;
+      box-shadow:0 10px 30px rgba(0,0,0,.2);
+      padding:30px;
+      margin-bottom:30px;
     }
     .form-group { margin-bottom:25px; }
-    .form-group label { display:block; margin-bottom:8px; font-weight:600; color:#555; }
+    .form-group label { display:block; margin-bottom:8px; font-weight:600; color:#fff; }
     .file-input-wrapper { position:relative; display:inline-block; width:100%; }
     .file-input {
-      width:100%; padding:15px; border:2px dashed #e1e5e9; border-radius:8px;
-      background:#f8f9fa; cursor:pointer; transition:.3s ease; text-align:center; position:relative;
+      width:100%; padding:15px;
+      border: 2px solid #7FFFD4;
+      border-radius:8px;
+      background:rgba(0, 0, 50, 0.5);
+      cursor:pointer; transition:.3s ease; text-align:center; position:relative;
+      color: #fff;
     }
-    .file-input:hover { border-color:#667eea; background:#f0f2ff; }
+    .file-input:hover { border-color:#6971e2; background:rgba(0, 0, 80, 0.7); }
     .file-input input[type="file"] { position:absolute; opacity:0; width:100%; height:100%; left:0; top:0; cursor:pointer; }
-    .file-info { margin-top:10px; padding:10px; background:#e8f4fd; border-radius:5px; font-size:14px; color:#0066cc; display:none; }
+    .file-info { margin-top:10px; padding:10px; background:rgba(255, 255, 255, 0.2); border-radius:5px; font-size:14px; color:#fff; display:none; }
+    
+    /* Updated button style */
     .btn {
-      background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:#fff; border:none;
-      padding:15px 30px; border-radius:8px; font-size:16px; font-weight:600; cursor:pointer; transition:.3s ease; width:100%;
+      background: linear-gradient(
+        45deg,
+        rgba(144, 28, 84, 0.9),  /* #901c54 */
+        rgba(72, 4, 38, 0.9),   /* #480426 */
+        rgba(36, 4, 72, 0.9),   /* #240448 */
+        rgba(81, 40, 127, 0.9)  /* #51287f */
+      );
+      color: #fff;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .3s ease;
+      width: 100%;
+      background-size: 400% 400%; /* Increased size for live effect */
+      animation: shimmer 15s ease infinite; /* Applied live shimmer animation */
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
     }
-    .btn:hover { transform:translateY(-2px); box-shadow:0 5px 15px rgba(102,126,234,.4); }
-    .btn:disabled { background:#ccc; cursor:not-allowed; transform:none; box-shadow:none; }
-    .btn-secondary { background:#6c757d; width:auto; }
+    .btn:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+      animation: shimmer 7s ease infinite; /* Faster shimmer on hover */
+    }
+    .btn:disabled { 
+      background: #ccc; 
+      cursor: not-allowed; 
+      transform: none; 
+      box-shadow: none; 
+      animation: none;
+    }
+    .btn-secondary { 
+      background: #A02439; 
+      width: auto; 
+      transition: all .3s ease;
+    }
+    /* New hover effect for the secondary button to glow red */
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px 5px rgba(255, 0, 0, 0.6);
+    }
+    .btn-gemini {
+      background: linear-gradient(135deg, #11f5a3 0%, #78f9cb 100%);
+      color: #0f0c29;
+      font-weight: 700;
+      width: auto;
+      background-size: 200% 200%;
+      transition: all .3s ease;
+    }
+    .btn-gemini:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px rgba(17, 245, 163, 0.7);
+      background-position: right center;
+    }
     .button-group { display:flex; gap:10px; margin-top:20px; flex-wrap:wrap; }
     .loading { display:none; text-align:center; padding:20px; }
     .spinner {
@@ -45,9 +292,10 @@
     }
     @keyframes spin { 0%{transform:rotate(0)} 100%{transform:rotate(360deg)} }
     .results { display:none; margin-top:30px; }
-    .result-item { background:#f8f9fa; border-left:4px solid #667eea; padding:20px; margin-bottom:20px; border-radius:0 8px 8px 0; }
-    .question { font-weight:600; color:#333; margin-bottom:15px; font-size:1.1rem; }
-    .answer { color:#555; line-height:1.6; }
+    .gemini-results { display:none; margin-top:30px; }
+    .result-item { background:rgba(255, 255, 255, 0.1); border-left:4px solid #667eea; padding:20px; margin-bottom:20px; border-radius:0 8px 8px 0; }
+    .question { font-weight:600; color:#fff; margin-bottom:15px; font-size:1.1rem; }
+    .answer { color:#fff; line-height:1.6; }
     .answer img {
       max-width:100%; height:auto; border-radius:8px; margin:10px 0;
       box-shadow:0 4px 8px rgba(0,0,0,.1); cursor:pointer; transition:transform .3s ease;
@@ -68,30 +316,33 @@
   </style>
 </head>
 <body>
+  <!-- Starfield animation layer -->
+  <div class="stars"></div>
+  
   <div class="container">
     <div class="header">
-      <h1>🤖 TDS Data Analyst Agent</h1>
-      <p>Upload your questions file and optional dataset to get intelligent answers with visualizations</p>
+      <h1>Automated Data Analyst Agent 🕵🏻</h1>
+      <p>Wanna see what your data's been hiding? 🧐 Upload your files and let's get weird with it. Answers, charts, and more—I'll spill all the secrets. 🤫📊</p>
     </div>
 
     <div class="main-card">
       <form id="analysisForm">
         <!-- Questions file (REQUIRED) -->
         <div class="form-group">
-          <label for="questions_file">Questions File (.txt) <span style="color:#dc3545">*</span></label>
+          <label for="questions_file">Questions File (.txt files only*) <span style="color:#dc3545">*</span></label>
           <div class="file-input-wrapper">
             <div class="file-input" id="questionsDrop">
               <input type="file" id="questions_file" name="questions_file" accept=".txt"/>
-              <span>📁 Click to upload your questions (.txt)</span>
+              <span>📁 Click here to upload your questions (.txt)</span>
             </div>
           </div>
           <div id="questionsInfo" class="file-info"></div>
-          <small style="color:#666; margin-top:5px; display:block;">Plain text file with one or more questions.</small>
+          <small style="color:#fff; margin-top:5px; display:block;">Plain text file with one or more questions.</small>
         </div>
 
-        <!-- Dataset file (OPTIONAL) -->
+        <!-- Dataset file (Optional) -->
         <div class="form-group">
-          <label for="data_file">Upload Dataset (Optional)</label>
+          <label for="data_file">Upload your Dataset (quite optional)</label>
           <div class="file-input-wrapper">
             <div class="file-input" id="dataDrop">
               <input type="file" id="data_file" name="data_file" accept=".csv,.xlsx,.xls,.json,.parquet,.txt"/>
@@ -99,23 +350,30 @@
             </div>
           </div>
           <div id="dataInfo" class="file-info"></div>
-          <small style="color:#666; margin-top:5px; display:block;">Supported: CSV, Excel (.xlsx, .xls), JSON, Parquet, TXT</small>
+          <small style="color:#fff; margin-top:5px; display:block;">Supported: CSV, Excel (.xlsx, .xls), JSON, Parquet, TXT</small>
         </div>
 
         <div class="button-group">
-          <button type="submit" class="btn" id="submitBtn">🚀 Analyze Data</button>
+          <button type="submit" class="btn" id="submitBtn">🧠🔎Analyze it ASAP!!</button>
           <button type="button" class="btn btn-secondary" id="clearBtn">🗑️ Clear</button>
         </div>
       </form>
 
       <div class="loading" id="loading">
         <div class="spinner"></div>
-        <p>Analyzing your data... This may take a few moments.</p>
+        <p> Lil Ninjas🥷🏿🏿 on our CPU are doing Heavy Thinking... This might take a while to process...</p>
       </div>
 
       <div class="results" id="results">
         <h3>📊 Analysis Results</h3>
         <div id="resultsContent"></div>
+        <button type="button" class="btn btn-gemini" id="geminiSummaryBtn">✨ Generate Report Summary</button>
+      </div>
+
+      <!-- New section for Gemini API results -->
+      <div class="gemini-results" id="geminiResults">
+        <h3>✨ Gemini Summary</h3>
+        <div id="geminiResultsContent" class="result-item"></div>
       </div>
     </div>
   </div>
@@ -166,7 +424,7 @@
       if (text.includes('\n') || text.length > 120) {
         const pre = document.createElement('pre');
         pre.style.whiteSpace = 'pre-wrap';
-        pre.style.background = '#f8f9fa';
+        pre.style.background = 'rgba(255, 255, 255, 0.1)';
         pre.style.padding = '15px';
         pre.style.borderRadius = '5px';
         pre.style.overflow = 'auto';
@@ -201,6 +459,11 @@
         this.results = document.getElementById('results');
         this.resultsContent = document.getElementById('resultsContent');
 
+        // New Gemini API elements
+        this.geminiSummaryBtn = document.getElementById('geminiSummaryBtn');
+        this.geminiResults = document.getElementById('geminiResults');
+        this.geminiResultsContent = document.getElementById('geminiResultsContent');
+
         // Modal
         this.modal = document.getElementById('imageModal');
         this.modalImage = document.getElementById('modalImage');
@@ -212,6 +475,7 @@
       initEventListeners() {
         this.form.addEventListener('submit', (e) => this.handleSubmit(e));
         this.clearBtn.addEventListener('click', () => this.clearForm());
+        this.geminiSummaryBtn.addEventListener('click', () => this.handleGenerateSummary());
 
         this.qFileInput.addEventListener('change', (e) => this.handleFileSelect(e, 'q'));
         this.dFileInput.addEventListener('change', (e) => this.handleFileSelect(e, 'd'));
@@ -237,18 +501,18 @@
       setupDrop(zone, onDropFiles) {
         zone.addEventListener('dragover', (e) => {
           e.preventDefault();
-          zone.style.borderColor = '#667eea';
-          zone.style.background = '#f0f2ff';
+          zone.style.borderColor = '#7FFFD4';
+          zone.style.background = 'rgba(0, 0, 80, 0.7)';
         });
         zone.addEventListener('dragleave', (e) => {
           e.preventDefault();
-          zone.style.borderColor = '#e1e5e9';
-          zone.style.background = '#f8f9fa';
+          zone.style.borderColor = '#7FFFD4';
+          zone.style.background = 'rgba(0, 0, 50, 0.5)';
         });
         zone.addEventListener('drop', (e) => {
           e.preventDefault();
-          zone.style.borderColor = '#e1e5e9';
-          zone.style.background = '#f8f9fa';
+          zone.style.borderColor = '#7FFFD4';
+          zone.style.background = 'rgba(0, 0, 50, 0.5)';
           onDropFiles(e.dataTransfer.files);
         });
       }
@@ -283,6 +547,7 @@
 
         this.showLoading();
         this.hideResults();
+        this.hideGeminiResults();
 
         try {
           const formData = new FormData();
@@ -310,8 +575,94 @@
         }
       }
 
+      async handleGenerateSummary() {
+        if (this.resultsContent.children.length === 0) {
+          this.displayGeminiError("Please run an analysis first to generate a summary.");
+          return;
+        }
+
+        this.showLoading();
+        this.hideGeminiResults();
+
+        try {
+          const analysisText = this.getAnalysisResultsAsText();
+          const prompt = `Based on the following data analysis results, provide a concise and professional summary. The analysis includes questions and their corresponding answers. Please focus on the key findings and present them in a clear, easy-to-read format, suitable for a business report.
+          \n\nAnalysis Results:\n\n${analysisText}`;
+
+          let retryCount = 0;
+          const maxRetries = 3;
+          let success = false;
+
+          while (retryCount < maxRetries && !success) {
+            try {
+              const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+              const payload = { contents: chatHistory };
+              const apiKey = ""
+              const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+              const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+              });
+
+              if (!response.ok) {
+                const errorData = await response.json();
+                console.error('API Error:', errorData);
+                throw new Error(`API returned status ${response.status}`);
+              }
+
+              const result = await response.json();
+
+              if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts.length > 0) {
+                const summaryText = result.candidates[0].content.parts[0].text;
+                this.displayGeminiResults(summaryText);
+                success = true;
+              } else {
+                console.error('Unexpected API response structure:', result);
+                throw new Error('Unexpected API response structure.');
+              }
+            } catch (error) {
+              console.error(`Attempt ${retryCount + 1} failed:`, error);
+              if (retryCount < maxRetries - 1) {
+                const delay = Math.pow(2, retryCount) * 1000;
+                await new Promise(resolve => setTimeout(resolve, delay));
+              } else {
+                throw error;
+              }
+            }
+            retryCount++;
+          }
+        } catch (err) {
+          console.error('Gemini summary generation failed:', err);
+          this.displayGeminiError(err.message || 'Failed to generate summary.');
+        } finally {
+          this.hideLoading();
+        }
+      }
+      
+      getAnalysisResultsAsText() {
+        let text = "";
+        const resultItems = this.resultsContent.querySelectorAll('.result-item');
+        resultItems.forEach(item => {
+          const question = item.querySelector('.question').textContent;
+          const answer = item.querySelector('.answer');
+          let answerText = "";
+          if (answer.querySelector('pre')) {
+            answerText = answer.querySelector('pre').textContent;
+          } else if (answer.querySelector('img')) {
+            answerText = "Image/Chart generated.";
+          } else {
+            answerText = answer.textContent;
+          }
+          text += `${question}\n${answerText}\n\n`;
+        });
+        return text.trim();
+      }
+
       displayResults(data) {
         this.resultsContent.innerHTML = '';
+        this.hideGeminiResults();
         if (data.error) { this.displayError(data.error); return; }
 
         Object.entries(data).forEach(([question, answer]) => {
@@ -336,25 +687,41 @@
         this.scrollToResults();
       }
 
+      displayGeminiResults(summary) {
+        this.geminiResultsContent.innerHTML = '';
+        this.geminiResultsContent.textContent = summary;
+        this.geminiResultsContent.classList.remove('error');
+        this.showGeminiResults();
+        this.scrollToGeminiResults();
+      }
+
       displayError(message) {
         this.resultsContent.innerHTML = '';
         const item = document.createElement('div');
         item.className = 'result-item error';
 
         const title = document.createElement('div');
-        title.className = 'question';
-        title.textContent = '❌ Error';
+          title.className = 'question';
+          title.textContent = '❌ Error';
 
-        const content = document.createElement('div');
-        content.className = 'answer';
-        content.textContent = message;
+          const content = document.createElement('div');
+          content.className = 'answer';
+          content.textContent = message;
 
-        item.appendChild(title);
-        item.appendChild(content);
-        this.resultsContent.appendChild(item);
+          item.appendChild(title);
+          item.appendChild(content);
+          this.resultsContent.appendChild(item);
 
-        this.showResults();
-        this.scrollToResults();
+          this.showResults();
+          this.scrollToResults();
+      }
+      
+      displayGeminiError(message) {
+        this.geminiResultsContent.innerHTML = '';
+        this.geminiResultsContent.textContent = `❌ Error: ${message}`;
+        this.geminiResultsContent.classList.add('error');
+        this.showGeminiResults();
+        this.scrollToGeminiResults();
       }
 
       showImageModal(src) {
@@ -370,18 +737,26 @@
       showLoading() {
         this.loading.style.display = 'block';
         this.submitBtn.disabled = true;
+        this.geminiSummaryBtn.disabled = true;
         this.submitBtn.textContent = '⏳ Analyzing...';
       }
       hideLoading() {
         this.loading.style.display = 'none';
         this.submitBtn.disabled = false;
-        this.submitBtn.textContent = '🚀 Analyze Data';
+        this.geminiSummaryBtn.disabled = false;
+        this.submitBtn.textContent = '🧠🔎Analyze it ASAP!!';
       }
 
       showResults() { this.results.style.display = 'block'; }
       hideResults() { this.results.style.display = 'none'; }
+      showGeminiResults() { this.geminiResults.style.display = 'block'; }
+      hideGeminiResults() { this.geminiResults.style.display = 'none'; }
+      
       scrollToResults() {
         setTimeout(() => this.results.scrollIntoView({ behavior:'smooth', block:'start' }), 100);
+      }
+      scrollToGeminiResults() {
+        setTimeout(() => this.geminiResults.scrollIntoView({ behavior:'smooth', block:'start' }), 100);
       }
 
       clearForm() {
@@ -391,6 +766,7 @@
         this.dInfo.style.display = 'none';
         this.hideResults();
         this.hideLoading();
+        this.hideGeminiResults();
       }
     }
 
